@@ -1,12 +1,55 @@
-<div id="clock" style="font-size: 24px;"></div>
-<script>
-  function updateClock() {
-    const now = new Date();
-    const hours = now.getHours().toString().padStart(2, '0');
-    const minutes = now.getMinutes().toString().padStart(2, '0');
-    const seconds = now.getSeconds().toString().padStart(2, '0');
-    document.getElementById('clock').textContent = `${hours}:${minutes}:${seconds}`;
-  }
-  setInterval(updateClock, 1000);
-  updateClock();
-</script>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Ngày Hôm Nay</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+        #date-widget {
+            font-size: 24px;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <div id="date-widget"></div>
+    <script>
+        function getDayOfWeek(dayIndex) {
+            const days = ["Chủ nhật", "Thứ hai", "Thứ ba", "Thứ tư", "Thứ năm", "Thứ sáu", "Thứ bảy"];
+            return days[dayIndex];
+        }
+
+        function formatDate(date) {
+            const day = date.getDate().toString().padStart(2, '0');
+            const month = (date.getMonth() + 1).toString().padStart(2, '0');
+            return `${day}/${month}`;
+        }
+
+        function updateDateWidget() {
+            const now = new Date();
+            // Điều chỉnh múi giờ GMT+7
+            now.setHours(now.getHours() + 7);
+            
+            const dayOfWeek = getDayOfWeek(now.getDay());
+            const date = formatDate(now);
+            
+            document.getElementById('date-widget').textContent = `${dayOfWeek} ${date}`;
+        }
+
+        updateDateWidget();
+        // Cập nhật mỗi ngày
+        setInterval(updateDateWidget, 24 * 60 * 60 * 1000);
+    </script>
+</body>
+</html>
